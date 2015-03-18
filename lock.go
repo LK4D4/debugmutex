@@ -21,7 +21,7 @@ type Mutex struct {
 // New returns new debug mutex
 // retries parameter specify number of retries acquiring Mutex before fatal
 // exit, if <=0, then wait forever
-func New(retries int) *Mutex {
+func New(retries int) sync.Locker {
 	return &Mutex{retries: retries}
 }
 
