@@ -25,6 +25,9 @@ func New(retries int) sync.Locker {
 	return &Mutex{retries: retries}
 }
 
+// Lock tries to lock mutex. Interval between attempts is 1 second.
+// On each attempt stack trace and file:lino of previous Lock will be printed.
+// Lock does os.Exit(1) after last attempt.
 func (m *Mutex) Lock() {
 	_, file, line, _ := runtime.Caller(1)
 	caller := fmt.Sprintf("%s:%d", file, line)
@@ -58,6 +61,8 @@ loop:
 	m.myMu.Unlock()
 }
 
+// Unlock unlocks mutex. It prints place in code where it was called and where
+// mutex was locked.
 func (m *Mutex) Unlock() {
 	_, file, line, _ := runtime.Caller(1)
 	caller := fmt.Sprintf("%s:%d", file, line)
