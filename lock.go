@@ -9,8 +9,8 @@ import (
 	"github.com/Sirupsen/logrus"
 )
 
-// Mutex is debug mutex, which prints logs and traces for locks
-// implements sync.Locker interface
+// Mutex is debugging mutex, which prints logs and traces for locks.
+// Mutex implements sync.Locker interface.
 type Mutex struct {
 	retries  int
 	mu       sync.Mutex
@@ -19,10 +19,10 @@ type Mutex struct {
 	errFunc  func(format string, args ...interface{})
 }
 
-// New returns new debug mutex
-// retries parameter specify number of retries acquiring Mutex before error
-// message, if <=0, then wait forever
-// if fatal is true, then program will exit by os.Exit(1)
+// New returns new debug mutex.
+// retries specify the number of retries acquiring Mutex before error
+// message, if <=0, then retry forever.
+// If fatal is true, then program will exit by os.Exit(1).
 func New(retries int, fatal bool) sync.Locker {
 	var errF func(format string, args ...interface{})
 	errF = logrus.Errorf
@@ -36,8 +36,8 @@ func New(retries int, fatal bool) sync.Locker {
 }
 
 // Lock tries to lock mutex. Interval between attempts is 1 second.
-// On each attempt stack trace and file:lino of previous Lock will be printed.
-// Lock does os.Exit(1) after last attempt.
+// On each attempt stack trace and file:line of a previous Lock printed.
+// Lock does os.Exit(1) after last attempt if fatal parameter was true.
 func (m *Mutex) Lock() {
 	_, file, line, _ := runtime.Caller(1)
 	caller := fmt.Sprintf("%s:%d", file, line)
@@ -71,8 +71,8 @@ loop:
 	m.myMu.Unlock()
 }
 
-// Unlock unlocks mutex. It prints place in code where it was called and where
-// mutex was locked.
+// Unlock unlocks the mutex. It prints place in the code where it was called
+// and where mutex was locked.
 func (m *Mutex) Unlock() {
 	_, file, line, _ := runtime.Caller(1)
 	caller := fmt.Sprintf("%s:%d", file, line)
