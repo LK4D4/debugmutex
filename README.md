@@ -1,11 +1,12 @@
 debugmutex
 ==========
 
-Mutex for debugging deadlocks
+Mutex for debugging deadlocks. It can find non-obvious deadlocks in systems
+with heavy `sync.Mutex` usage. I found many deadlocks in Docker with it.
 
 # Usage
 
-```
+```go
 type Struct struct {
     sync.Locker
 }
@@ -21,8 +22,8 @@ func New() *Struct {
 }
 ```
 
-For logging used `github.com/Sirupsen/logrus`. You can set debug logging with
+For logging `github.com/Sirupsen/logrus` is used. You can set debug logging with
 
-```
+```go
 logrus.SetLevel(logrus.DebugLevel)
 ```
