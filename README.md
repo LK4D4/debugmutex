@@ -1,6 +1,8 @@
 debugmutex
 ==========
 
+[![Build Status](https://travis-ci.org/LK4D4/debugmutex.svg?branch=master)](https://travis-ci.org/LK4D4/debugmutex)
+
 Mutex for debugging deadlocks. It can find non-obvious deadlocks in systems
 with heavy `sync.Mutex` usage. I found many deadlocks in Docker with it.
 
