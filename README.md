@@ -25,7 +25,7 @@ func New() *Struct {
 }
 ```
 
-For logging `github.com/Sirupsen/logrus` is used. You can set debug logging with
+For logging `github.com/sirupsen/logrus` is used. You can set debug logging with
 
 ```go
 logrus.SetLevel(logrus.DebugLevel)
